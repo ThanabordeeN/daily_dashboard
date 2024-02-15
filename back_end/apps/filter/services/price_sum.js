@@ -10,12 +10,16 @@ function cusno_sumvalue(dbmodel) {
         // If the sumByDateTime object already has a property with the shpdt value
         if (sumByDateTime[shpdt]) {
             // Add the alqty value to the existing sumByDateTime property
-            sumByDateTime[shpdt] += Number(data[i].sumprice)
+            sumByDateTime[shpdt] += Number(data[i].sumnoinv)
         } else {
             // If the sumByDateTime object does not have a property with the shpdt value
             // Create a new property with the shpdt value and set it to the alqty value
-            sumByDateTime[shpdt] = Number(data[i].sumprice)
+            sumByDateTime[shpdt] = Number(data[i].sumnoinv)
         }
+    }
+    if (sumByDateTime['2024-02-11']) {
+        // If it exists, delete it
+        delete sumByDateTime['2024-02-11'];
     }
     return sumByDateTime;
 }

@@ -40,10 +40,11 @@ function filterProcess(values) {
         item.push('T1');
     }
     
-
     const database = Object.entries(dbmodel).flat(Infinity);
     //
+    
     const filtered_date = database.filter(entry => entry.shpdt >= values.start_date && entry.shpdt <= values.end_date);
+    
     const filtered_plant = filtered_date.filter(entry => item.includes(entry.packc));    
     let filtered_plant_data;
     if (values.part_no === '' && values.customer_no === '') {
@@ -52,13 +53,6 @@ function filterProcess(values) {
         filtered_plant_data = filtered_plant.filter(entry => entry.prtno === values.part_no || entry.cusno === values.customer_no);
     }
     console.log(values.start_date, values.end_date, filtered_plant_data.length);
-    const alqty = alqty_sum(filtered_plant_data);
-    const price = price_sum(filtered_plant_data);
-    const alqtySumJson = JSON.stringify(alqty);
-    fs.writeFileSync('alqty_sum.json', alqtySumJson);
-
-    const priceSumJson = JSON.stringify(price);
-    fs.writeFileSync('price_sum.json', priceSumJson);
     return filtered_plant_data;
 }
 

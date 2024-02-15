@@ -20,7 +20,13 @@
     border-radius: 10px;
     margin: 10px;   
 }
+.grid-led{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(1, 1fr);
 
+  
+}
 span {
     font-size: 20px;
     font-weight: bold;
@@ -53,6 +59,13 @@ span {
     padding: 2px;
     font-size: 30px;
     text-align: center;
+}
+.grid-addon{
+  padding: 2px;
+  font-size: 30px;
+  text-align: center;
+
+
 }
 input[type="text"], input[type="number"], input[type="date"]{
     width: 100%;

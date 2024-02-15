@@ -4,7 +4,7 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'Daily_income',
-    password: 'densoDx01',
+    password: 'postgres',
     port: 5432, // default PostgreSQL port
 });
 
@@ -26,7 +26,6 @@ pool.connect((err, client, release) => {
             row.shpdt = date.toISOString().split('T')[0];
         }); 
         dbmodel.push(result.rows);
-
     });
 });
 

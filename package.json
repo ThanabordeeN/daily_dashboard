@@ -5,6 +5,7 @@
     "@mui/material": "^5.15.7",
     "@mui/x-date-pickers": "^6.19.3",
     "@mui/x-date-pickers-pro": "^6.19.3",
-    "material-symbols": "^0.14.7"
+    "material-symbols": "^0.14.7",
+    "rn-slide-button": "^1.0.3"
   }
 }
