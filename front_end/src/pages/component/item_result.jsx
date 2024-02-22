@@ -37,7 +37,8 @@ const Item_result = ({ data, dataset, sum_price, sum_alqty }) => {
                             xAxis={[{ scaleType: 'point', dataKey: 'date' }]}
                             series={[
                                 { dataKey: 'alqty_Sum', label: 'Actual Shipped (EA)', area: true },
-                                { dataKey: 'order_qty', label: 'Order Qty (EA)' },
+                                { dataKey: 'order_qty', label: 'Orderd (EA)' },
+                                { dataKey: 'accum_item', label: 'Accumurate Item (EA)', yAxisKey: 'rightAxisId' },
                             ]}
                             xAxisTitle="Date"
                             yAxisTitle="Value"
@@ -56,6 +57,7 @@ const Item_result = ({ data, dataset, sum_price, sum_alqty }) => {
                             <th>Date</th>
                             <th>Actual Shipped (EA)</th>
                             <th>Order Qty (EA)</th>
+                            <th>Accumurate Item (EA)</th>
                        </tr>
                     </thead>
                     <tbody>
@@ -64,6 +66,7 @@ const Item_result = ({ data, dataset, sum_price, sum_alqty }) => {
                                 <td>{row.date}</td>
                                 <td>{row.alqty_Sum.toLocaleString()}</td>
                                 <td>{row.order_qty.toLocaleString()}</td>
+                                <td>{row.accum_item.toLocaleString()}</td>
                             </tr>
                         ))}
                     </tbody>

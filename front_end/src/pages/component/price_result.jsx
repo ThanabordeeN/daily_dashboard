@@ -1,7 +1,7 @@
 import React from 'react';
 import { LineChart } from '@mui/x-charts';
 
-const Price_result = ({ data, dataset, sum_price, sum_alqty }) => {
+const Priceresult = ({ data, dataset, sum_price, sum_alqty }) => {
     return (
         <div>
                        <div className="grid-item">
@@ -37,11 +37,10 @@ const Price_result = ({ data, dataset, sum_price, sum_alqty }) => {
                             series={[
                                 { dataKey: 'price_Sum', label: 'Actual Value (Bath)', area: true },
                                 { dataKey: 'order_price', label: 'Target Order Value (Bath)' },
-                                { dataKey: 'accum_price', label: 'Accumurate (Bath)', yAxisKey: 'rightAxisId' },
+                                { dataKey: 'accum_price', label: 'Accumurate Value (Bath)', yAxisKey: 'rightAxisId' },
                             ]}
                             xAxisTitle="Date"
                             yAxisTitle="Value"
-
                             yAxis={[{ id: 'leftAxisId' }, { id: 'rightAxisId' }]}
                             rightAxis="rightAxisId"
                             margin={{ top: 10, right: 100, bottom: 20, left: 100 }} // Adjust the margin values here
@@ -78,4 +77,4 @@ const Price_result = ({ data, dataset, sum_price, sum_alqty }) => {
     );
 };
 
-export default Price_result;
+export default Priceresult;

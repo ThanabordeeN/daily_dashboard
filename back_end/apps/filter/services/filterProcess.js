@@ -18,6 +18,7 @@ const price_sum = require('./price_sum');
  */
 function filterProcess(values) {
     const item = [];
+    
     const plant_selection = values.plant_selection;
 
     const currentDate = new Date();

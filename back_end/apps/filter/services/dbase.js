@@ -9,6 +9,7 @@ const pool = new Pool({
 });
 
 const dbmodel = [];
+setInterval(() => {
 pool.connect((err, client, release) => {
     if (err) {
         return console.error('Error acquiring client', err.stack);
@@ -25,8 +26,10 @@ pool.connect((err, client, release) => {
             date.setDate(date.getDate() + 1); // add one day
             row.shpdt = date.toISOString().split('T')[0];
         }); 
-        dbmodel.push(result.rows);
+        dbmodel.push(resuxlt.rows);
+        
     });
 });
+}, 60000);
 
 module.exports = dbmodel;

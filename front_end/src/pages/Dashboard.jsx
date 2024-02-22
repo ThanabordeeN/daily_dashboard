@@ -2,7 +2,7 @@ import { Formik, Field, Form } from 'formik';
 import './Dashboard.css';
 import React, { useState, useEffect } from 'react';
 import 'material-symbols';
-import Price_result from './component/price_result';
+import Priceresult from './component/price_result';
 import ItemResult from './component/item_result';
 
 const Dashboard = () => {
@@ -15,7 +15,8 @@ const Dashboard = () => {
         alqty_Sum: data?.alqty_Sum?.[key],
         accum_price: data?.accum_price?.[key],
         order_qty: data?.ogqty_Sum?.[key],
-        order_price: data?.order_price?.[key]
+        order_price: data?.order_price?.[key],
+        accum_item: data?.accum_item?.[key]
     }));
     const sum_price = dataset.reduce((acc, row) => acc + row.price_Sum, 0);
     const sum_alqty = dataset.reduce((acc, row) => acc + row.alqty_Sum, 0);
@@ -77,7 +78,7 @@ const Dashboard = () => {
                                         <div key={key}>
                                             <label>
                                                 <Field type="checkbox" name={`plant_selection.${key}`} />
-                                                <span className="checkmark">{key}</span>
+                                                <span className="checkmark">{key.toUpperCase()}</span>
                                             </label>
                                         </div>
                                     ))}
@@ -91,7 +92,7 @@ const Dashboard = () => {
                 </div>
             </div>
             <div>
-            {selection === 'Amount' && <Price_result data={data} dataset={dataset} sum_price={sum_price} sum_alqty={sum_alqty} />}
+            {selection === 'Amount' && <Priceresult data={data} dataset={dataset} sum_price={sum_price} sum_alqty={sum_alqty} />}
             {selection === 'item' && <ItemResult data={data} dataset={dataset} sum_price={sum_price} sum_alqty={sum_alqty} />}
             </div>
         </div>
