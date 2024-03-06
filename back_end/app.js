@@ -7,6 +7,10 @@ var cors = require("cors");
 
 //ar indexRouter = require('./apps/index/controller/index');
 var usersRouter = require('./apps/filter/controller/filter');
+var oem = require('./apps/oem/controller/oem');
+// var ovr = require('./apps/ovr/controller/ovr');
+// var oes = require('./apps/oes/controller/oes');
+// var spare = require('./apps/spare/controller/spare');
 
 var app = express();
 
@@ -23,6 +27,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/', indexRouter);
 app.use('/filter', usersRouter);
+app.use('/oem', oem);
+// app.use('/ovr', ovr);
+// app.use('/oes', oes);
+// app.use('/spare', spare);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

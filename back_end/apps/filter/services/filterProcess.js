@@ -20,7 +20,7 @@ function filterProcess(values) {
     const item = [];
     
     const plant_selection = values.plant_selection;
-
+    const destination_selection = values.destination_selection;
     const currentDate = new Date();
     const year = currentDate.getFullYear();
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');

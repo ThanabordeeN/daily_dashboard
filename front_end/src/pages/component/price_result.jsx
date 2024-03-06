@@ -1,5 +1,5 @@
 import React from 'react';
-import { LineChart } from '@mui/x-charts';
+import { BarChart, LineChart } from '@mui/x-charts';
 
 const Priceresult = ({ data, dataset, sum_price, sum_alqty }) => {
     return (
@@ -31,20 +31,19 @@ const Priceresult = ({ data, dataset, sum_price, sum_alqty }) => {
                 <h4>Dashboard</h4>
                 <div style={{ height: "800px", width: "100%" }}>
                     {data && data.price_Sum && (
-                        <LineChart
+                        <BarChart
                             dataset={dataset}
-                            xAxis={[{ scaleType: 'point', dataKey: 'date' }]}
+                            xAxis={[{ scaleType: 'band', dataKey: 'date' }]}
                             series={[
                                 { dataKey: 'price_Sum', label: 'Actual Value (Bath)', area: true },
                                 { dataKey: 'order_price', label: 'Target Order Value (Bath)' },
-                                { dataKey: 'accum_price', label: 'Accumurate Value (Bath)', yAxisKey: 'rightAxisId' },
                             ]}
                             xAxisTitle="Date"
                             yAxisTitle="Value"
                             yAxis={[{ id: 'leftAxisId' }, { id: 'rightAxisId' }]}
-                            rightAxis="rightAxisId"
                             margin={{ top: 10, right: 100, bottom: 20, left: 100 }} // Adjust the margin values here
                             style={{ maxWidth: '1000px' }} // Set a max width to limit the chart size on larger screens
+                            axisData={{ x: { value: 0 } }} // Add a valid value for `x.value`
                         />
                     )}
                 </div>

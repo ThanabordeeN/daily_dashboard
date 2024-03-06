@@ -20,10 +20,6 @@ function cusno_sumvalue(dbmodel) {
             sumByDateTime[shpdt] = Number(data[i].orqty)
         }
     }
-    if (sumByDateTime['2024-02-11']) {
-        // If it exists, delete it
-        delete sumByDateTime['2024-02-11'];
-    }
 
     return sumByDateTime;
     
