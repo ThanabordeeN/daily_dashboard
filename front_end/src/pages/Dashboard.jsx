@@ -19,6 +19,8 @@ const Dashboard = () => {
         order_price: data?.order_price?.[key],
         accum_item: data?.accum_item?.[key]
     }));
+
+
     const sum_price = dataset.reduce((acc, row) => acc + row.price_Sum, 0);
     const sum_alqty = dataset.reduce((acc, row) => acc + row.alqty_Sum, 0);
 
@@ -49,7 +51,11 @@ const Dashboard = () => {
     useEffect(() => {
         fetchData().then((data) => {
             setData(data);
-        });; // Fetch data when the component mounts
+        });
+        fetchOEM().then((data) => {
+            setOem(data);
+        });
+
     }, []);
     useEffect(() => {
         const interval = setInterval(() => {
@@ -60,9 +66,12 @@ const Dashboard = () => {
 
         return () => clearInterval(interval); // Clean up the interval when the component unmounts
     }, []);
-    return (
+    return (        
+        <div className='grid-page'>
+        
+        {oem && <Subgraph data={oem} />}
+    
         <div>
-            <h1>Internal Loss</h1>
             <div className="grid-container">
                 <div className="grid-item">
                     Filter
@@ -80,35 +89,65 @@ const Dashboard = () => {
                             destination_selection: {
                                 export: true,
                                 domestic: true
-                            }
+                            },
+                            format_selection: 'all'
                         }}
                         onSubmit={async (values) => {
+                            console.log(values);
+
                             await fetchData(values);
                         }}
                     >
                         {({ values }) => (
                             <Form>
                                 <div className='grid-attribute'>
+                                        <label>Date Range
                                     <Field type="date" name="start_date" />
                                     <Field type="date" name="end_date" />
+                                    </label>
+                                    <label>Part Number
                                     <Field type="text" name="part_no" placeholder="Part Number"/>
+                                    </label>
+                                    <label>Customer Number
                                     <Field type="text" name="customer_no" placeholder="Customer Number" />
+                                    </label>
+                                    <label>Plant
+                                    <div>
                                     {Object.entries(values.plant_selection).map(([key]) => (
-                                        <div key={key}>
-                                            <label>
+                                        <label key={key}>
                                                 <Field type="checkbox" name={`plant_selection.${key}`} />
                                                 <span className="checkmark">{key.toUpperCase()}</span>
-                                            </label>
-                                        </div>
+                                                <br></br>
+                                        </label>    
                                     ))}
-                                    {Object.entries(values.destination_selection).map(([key]) => (
-                                        <div key={key}>
-                                            <label>
+                                    </div>
+                                    </label>
+                                    <div>
+                                        Destinations
+                                        <div>
+                                        {Object.entries(values.destination_selection).map(([key]) => (
+                                        <label key={key}>
                                                 <Field type="checkbox" name={`destination_selection.${key}`} />
                                                 <span className="checkmark">{key.toUpperCase()}</span>
-                                            </label>
+                                                <br></br>
+                                        </label>    
+                                        ))}
                                         </div>
-                                    ))}
+                                    </div>
+                                    <div>
+                                        Format
+                                        <div>
+                                            <Field as= "select" name="format_selection">
+                                                <option value="all">All</option>
+                                                <option value="oem">OEM</option>
+                                                <option value="sparepart">Spare Part</option>
+                                                <option value="aftermarket">After Market/OES</option>
+                                            </Field>
+
+                        
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                                 <button className='button' onClick={() => setSelection('Amount')}><span>Amount</span></button>
                                 <button className='button' onClick={() => setSelection('item')}><span>Item</span></button>
@@ -119,11 +158,14 @@ const Dashboard = () => {
                 </div>
             </div>
             <div className="grid-item">
-            {oem && <Subgraph data={oem} />}
+            
+            {sum_price === 0 && <p>No data available</p>}
             {selection === 'Amount' && <Priceresult data={data} dataset={dataset} sum_price={sum_price} sum_alqty={sum_alqty} />}
             {selection === 'item' && <ItemResult data={data} dataset={dataset} sum_price={sum_price} sum_alqty={sum_alqty} />}
             </div>
         </div>
+        </div>
+
     );
 };
 

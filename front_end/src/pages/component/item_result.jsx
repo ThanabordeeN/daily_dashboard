@@ -29,7 +29,7 @@ const ItemResult = ({ data, dataset, sum_price, sum_alqty }) => {
 
             <div className="grid-item">
                 <h4>Dashboard</h4>
-                <div style={{ height: "800px", width: "100%" }}>
+                <div style={{ height: "600px", width: "100%" }}>
                     {data && data.price_Sum && (
                         <BarChart
                             dataset={dataset}

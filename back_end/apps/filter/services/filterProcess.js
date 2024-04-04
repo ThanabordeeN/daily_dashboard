@@ -17,8 +17,9 @@ const price_sum = require('./price_sum');
  * @returns {Array} - The filtered plant data.
  */
 function filterProcess(values) {
+    try {   
     const item = [];
-    
+    const destination = [];
     const plant_selection = values.plant_selection;
     const destination_selection = values.destination_selection;
     const currentDate = new Date();
@@ -40,21 +41,52 @@ function filterProcess(values) {
     if (plant_selection.ddc) {
         item.push('T1');
     }
-    
+    if (destination_selection.export) {
+        destination.push('CODE FOR EXPORT');
+    }
+    if (destination_selection.domestic) {
+        destination.push('CODE FOR DOMESTICS');
+    }
+
+
+
+
     const database = Object.entries(dbmodel).flat(Infinity);
     //
     
     const filtered_date = database.filter(entry => entry.shpdt >= values.start_date && entry.shpdt <= values.end_date);
-    
     const filtered_plant = filtered_date.filter(entry => item.includes(entry.packc));    
+    const filtered_plant_result = filtered_plant.filter(entry => destination.includes(entry.departing));
     let filtered_plant_data;
     if (values.part_no === '' && values.customer_no === '') {
-        filtered_plant_data = filtered_plant;
+        filtered_plant_data = filtered_plant_result;
     } else {
-        filtered_plant_data = filtered_plant.filter(entry => entry.prtno === values.part_no || entry.cusno === values.customer_no);
+        filtered_plant_data = filtered_plant_result.filter(entry => entry.prtno === values.part_no || entry.cusno === values.customer_no);
     }
-    console.log(values.start_date, values.end_date, filtered_plant_data.length);
+    if (values.format_selection === 'all') {
+        filtered_plant_data = filtered_plant_data;
+    }
+    if (values.format_selection === 'oem') {
+        filtered_plant_data = filtered_plant_data.filter(entry => entry.format === 'OEM');
+    }
+    if (values.format_selection === 'sparepart') {
+        filtered_plant_data = filtered_plant_data.filter(entry => entry.format === 'SPART PART');
+    }
+    if(values.format_selection === 'aftermarket') {
+        filtered_plant_data = filtered_plant_data.filter(entry => entry.format === 'AFTER MARKET/OES');
+    }
+    if (filtered_plant_data.length === 0) {
+        console.log('No data found');
+        filtered_plant_data = null;
+    }
+    console.log(values.start_date, values.end_date, filtered_plant_result.length ,destination,values.format_selection);
+    console.log(filtered_plant_data);
     return filtered_plant_data;
 }
-
+    catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+    
 module.exports = filterProcess;
